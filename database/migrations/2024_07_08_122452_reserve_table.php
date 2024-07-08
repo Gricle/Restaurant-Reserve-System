@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('reserve', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('userid');
             $table->string('foodid');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     
 }
