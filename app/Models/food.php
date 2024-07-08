@@ -1,14 +1,14 @@
 <?php
-// app/Models/Reserve.php
+
+// app/Models/Food.php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Reserve extends Model
+class Food extends Model
 {
     use HasFactory;
 
@@ -17,7 +17,7 @@ class Reserve extends Model
      *
      * @var string
      */
-    protected $table = 'reserves';
+    protected $table = 'foods';
 
     /**
      * The primary key associated with the table.
@@ -32,28 +32,18 @@ class Reserve extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
-        'userid',
-        'foodid',
+        'name',
+        'type',
+        'meal',
     ];
 
     /**
-     * Get the user that owns the reserve.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    /**
-     * Get the food items associated with the reserve.
+     * Get the reserves associated with the food item.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function food(): BelongsToMany
+    public function reserves(): BelongsToMany
     {
-        return $this->belongsToMany(Food::class, 'reserve_food', 'reserve_id', 'food_id');
+        return $this->belongsToMany(Reserve::class, 'reserve_food', 'food_id', 'reserve_id');
     }
 }
