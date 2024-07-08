@@ -15,6 +15,8 @@ return new class extends Migration
                 $table->id();
                 $table->string('username');
                 $table->string('password');
+                $table->integer('nationalCode');
+                $table->integer('number');
                 $table->string('email');
                 $table->boolean('is_blocked')->default(false);
                 $table->timestamps();
