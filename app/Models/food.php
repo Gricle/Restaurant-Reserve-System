@@ -20,7 +20,6 @@ class Food extends Model
         'price',
         'image',
         'category',
-        'type',
         'meal',
     ];
 

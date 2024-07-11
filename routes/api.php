@@ -2,14 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-
-
+use App\Http\Controllers\FoodController;
+use App\Http\Controllers\ReserveFoodController;
+use App\http\Controllers\ReserveController;
 
 Route::prefix('api')->group(function () {
-    Route::get('/users', [UserController::class, 'index']);
-    Route::post('/users', [UserController::class, 'store']);
-    Route::get('/users/{id}', [UserController::class, 'show']);
-    Route::put('/users/{id}', [UserController::class, 'update']);
-    Route::delete('/users/{id}', [UserController::class, 'destroy']);
+    
+    Route::resource('users', UserController::class);
+    Route::resource('foods', FoodController::class);
+    Route::resource('reserve_food', ReserveFoodController::class);
+    Route::resource('reserves', ReserveController::class);
+
 });
-Route::post('/users', [UserController::class, 'store']);
+
