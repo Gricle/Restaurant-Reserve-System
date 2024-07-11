@@ -14,6 +14,6 @@ class FoodsTableSeeder extends Seeder
      */
     public function run()
     {
-        Food::factory()->count(50)->create();
+        Food::factory()->count(20)->create();
     }
 }
