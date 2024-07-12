@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ReserveFood;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReserveFoodController extends Controller
 {
@@ -47,5 +48,25 @@ class ReserveFoodController extends Controller
         $reserveFood = ReserveFood::findOrFail($id);
         $reserveFood->delete();
         return response()->json(null, 204);
+    }
+
+    // New method added below
+
+    public function generateReservedFoodsPDF(Request $request)
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $reservedFoods = ReserveFood::whereBetween('created_at', [$startDate, $endDate])
+            ->with(['reserve', 'food'])
+            ->get();
+
+        $pdf = Pdf::loadView('foods.reserved_pdf', [
+            'reservedFoods' => $reservedFoods,
+            'startDate' => $startDate,
+            'endDate' => $endDate
+        ]);
+
+        return $pdf->download('reserved_foods_list.pdf');
     }
 }

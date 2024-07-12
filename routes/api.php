@@ -12,6 +12,8 @@ Route::prefix('api')->group(function () {
     Route::resource('foods', FoodController::class);
     Route::resource('reserve_food', ReserveFoodController::class);
     Route::resource('reserves', ReserveController::class);
+    Route::get('/users-pdf', [UserController::class, 'generateUsersPDF']);
+    Route::get('/reserved-foods-pdf', [ReserveFoodController::class, 'generateReservedFoodsPDF']);
 
 });
 
