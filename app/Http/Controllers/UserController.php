@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class UserController extends Controller
 {
@@ -56,4 +57,14 @@ class UserController extends Controller
         $user->delete();
         return response()->json(null, 204);
     }
-}
+
+  
+     public function generateUsersPDF()
+        {
+            $users = User::select('username')->get();
+            
+            $pdf = Pdf::loadView('users.pdf', ['users' => $users]);
+            
+            return $pdf->download('users_list.pdf');
+        }
+    }
