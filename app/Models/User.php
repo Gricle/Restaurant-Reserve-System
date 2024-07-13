@@ -20,6 +20,7 @@ class User extends Model
         'nationalCode',
         'phone',
         'email',
+        'imgURL',
         'is_blocked',
     ];
 

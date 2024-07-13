@@ -18,6 +18,7 @@ return new class extends Migration
                 $table->string('password');
                 $table->integer('phone');
                 $table->bigInteger('nationalCode');
+                $table->string('imgURL')->nullable();
                 $table->boolean('is_blocked')->default(false);
                 $table->timestamps();
             });

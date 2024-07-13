@@ -23,6 +23,7 @@ class UserController extends Controller
             'nationalCode' => 'required|string|max:10',
             'phone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
+            'imgURL' => 'string|max:255',
             'is_blocked' => 'boolean',
         ]);
 
