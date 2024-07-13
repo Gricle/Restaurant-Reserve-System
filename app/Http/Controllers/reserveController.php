@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reserve;
+use App\Http\Resources\ReserveResource;
 use Illuminate\Http\Request;
 
 class ReserveController extends Controller
@@ -10,7 +11,7 @@ class ReserveController extends Controller
     public function index()
     {
         $reserves = Reserve::with('user', 'food')->get();
-        return response()->json($reserves);
+        return ReserveResource::collection($reserves);
     }
 
     public function store(Request $request)
@@ -22,13 +23,13 @@ class ReserveController extends Controller
         ]);
 
         $reserve = Reserve::create($validatedData);
-        return response()->json($reserve, 201);
+        return new ReserveResource($reserve);
     }
 
     public function show($id)
     {
         $reserve = Reserve::with('user', 'food')->findOrFail($id);
-        return response()->json($reserve);
+        return new ReserveResource($reserve);
     }
 
     public function update(Request $request, $id)
@@ -41,7 +42,7 @@ class ReserveController extends Controller
 
         $reserve = Reserve::findOrFail($id);
         $reserve->update($validatedData);
-        return response()->json($reserve);
+        return new ReserveResource($reserve);
     }
 
     public function destroy($id)

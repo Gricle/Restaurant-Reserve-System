@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Food;
+use App\Http\Resources\FoodResource;
 use Illuminate\Http\Request;
 
 class FoodController extends Controller
@@ -10,7 +11,7 @@ class FoodController extends Controller
     public function index()
     {
         $foods = Food::all();
-        return response()->json($foods);
+        return FoodResource::collection($foods);
     }
 
     public function store(Request $request)
@@ -25,21 +26,21 @@ class FoodController extends Controller
         ]);
 
         $food = Food::create($validatedData);
-        return response()->json($food, 201);
+        return new FoodResource($food);
     }
 
     public function show($id)
     {
         $food = Food::findOrFail($id);
-        return response()->json($food);
+        return new FoodResource($food);
     }
 
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
             'name' => 'string|max:255',
-            'description ' =>'string|max:255',
-            'price' => 'string|max:10',
+            'description' => 'string|max:255',
+            'price' => 'numeric|max:999.99',
             'image' => 'string|max:255',
             'category' => 'string|max:255',
             'meal' => 'string|max:255',
@@ -47,7 +48,7 @@ class FoodController extends Controller
 
         $food = Food::findOrFail($id);
         $food->update($validatedData);
-        return response()->json($food);
+        return new FoodResource($food);
     }
 
     public function destroy($id)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ReserveFood;
+use App\Http\Resources\ReserveFoodResource;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -11,7 +12,7 @@ class ReserveFoodController extends Controller
     public function index()
     {
         $reserveFoods = ReserveFood::with('reserve', 'food')->get();
-        return response()->json($reserveFoods);
+        return ReserveFoodResource::collection($reserveFoods);
     }
 
     public function store(Request $request)
@@ -22,13 +23,13 @@ class ReserveFoodController extends Controller
         ]);
 
         $reserveFood = ReserveFood::create($validatedData);
-        return response()->json($reserveFood, 201);
+        return new ReserveFoodResource($reserveFood);
     }
 
     public function show($id)
     {
         $reserveFood = ReserveFood::with('reserve', 'food')->findOrFail($id);
-        return response()->json($reserveFood);
+        return new ReserveFoodResource($reserveFood);
     }
 
     public function update(Request $request, $id)
@@ -40,7 +41,7 @@ class ReserveFoodController extends Controller
 
         $reserveFood = ReserveFood::findOrFail($id);
         $reserveFood->update($validatedData);
-        return response()->json($reserveFood);
+        return new ReserveFoodResource($reserveFood);
     }
 
     public function destroy($id)
@@ -49,8 +50,6 @@ class ReserveFoodController extends Controller
         $reserveFood->delete();
         return response()->json(null, 204);
     }
-
-    // New method added below
 
     public function generateReservedFoodsPDF(Request $request)
     {

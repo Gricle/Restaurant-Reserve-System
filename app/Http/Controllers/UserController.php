@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -11,7 +12,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return response()->json($users);
+        return UserResource::collection($users);
     }
 
     public function store(Request $request)
@@ -26,13 +27,13 @@ class UserController extends Controller
         ]);
 
         $user = User::create($validatedData);
-        return response()->json($user, 201);
+        return new UserResource($user);
     }
 
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return response()->json($user);
+        return new UserResource($user);
     }
 
     public function update(Request $request, $id)
@@ -48,7 +49,7 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
         $user->update($validatedData);
-        return response()->json($user);
+        return new UserResource($user);
     }
 
     public function destroy($id)
@@ -58,13 +59,12 @@ class UserController extends Controller
         return response()->json(null, 204);
     }
 
-  
-     public function generateUsersPDF()
-        {
-            $users = User::select('username')->get();
-            
-            $pdf = Pdf::loadView('users.pdf', ['users' => $users]);
-            
-            return $pdf->download('users_list.pdf');
-        }
+    public function generateUsersPDF()
+    {
+        $users = User::select('username')->get();
+        
+        $pdf = Pdf::loadView('users.pdf', ['users' => $users]);
+        
+        return $pdf->download('users_list.pdf');
     }
+}
