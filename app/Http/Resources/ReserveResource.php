@@ -15,8 +15,10 @@ class ReserveResource extends JsonResource
             'user_id' => $this->user_id,
             'date' => $this->date,
             'time' => $this->time,
+            'is_payed' =>$this->is_payed,
             'user' => new UserResource($this->whenLoaded('user')),
             'food' => FoodResource::collection($this->whenLoaded('food')),
+
             // 'created_at' => $this->created_at,
             // 'updated_at' => $this->updated_at,
         ];

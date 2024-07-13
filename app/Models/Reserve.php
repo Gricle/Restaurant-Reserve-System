@@ -19,6 +19,7 @@ class Reserve extends Model
         'user_id',
         'date',
         'time',
+        'is_payed',
     ];
 
     public function user(): BelongsTo
