@@ -21,7 +21,7 @@ class UserController extends Controller
             'username' => 'required|string|max:255',
             'password' => 'required|string|min:8',
             'nationalCode' => 'required|string|max:10',
-            'phone' => 'required|string|max:20',
+            'phone' => 'required|integer',
             'email' => 'required|email|max:255',
             'imgURL' => 'string|max:255',
             'is_blocked' => 'boolean',
