@@ -6,7 +6,7 @@ use App\Http\Controllers\FoodController;
 use App\Http\Controllers\ReserveFoodController;
 use App\http\Controllers\ReserveController;
 
-Route::prefix('api')->group(function () {
+Route::prefix('')->group(function () {
     
     Route::resource('users', UserController::class);
     Route::resource('foods', FoodController::class);
